@@ -5,7 +5,8 @@
 - You will have to delete this folder as you will be running your own migration in the next steps
 ## 3. Configure appsettings.json
 
-  - Create an appsettings.json file in the root directory. See the template below:
+  - Create an appsettings.json file in the root directory. See the image and template below:
+    ![image](https://github.com/rkortiga/Todo-API/assets/125756155/b9f369bd-8bdc-4bb4-9356-92f59dbf088c)
 
 ```
 {
