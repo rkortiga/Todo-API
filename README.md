@@ -37,7 +37,7 @@ run Build.
  For the code-first approach, follow these steps:
 
 - Open the Package Manager Console.
-- Run Add-Migration `<MigrationName>` to scaffold a migration.
+- Run Add-Migration `MigrationName` to scaffold a migration.
 - Run Update-Database to apply the migration and create the database.
 
 ## 8. Run the App
