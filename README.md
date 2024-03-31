@@ -24,7 +24,7 @@
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "TodoDbConnectionString": "<Your Database Connection String>"
+    "DefaultConnection": "<Your Database Connection String>"
   }
 }
 ```
