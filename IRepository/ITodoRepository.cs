@@ -7,9 +7,10 @@ namespace Todo_API.IRepository
     {
         ICollection<Todo> GetTodos();
         Todo GetTodoById(int id);
-        bool CreateTodo(TodoDto createTodo);
-        bool EditTodo(int id, TodoDto updateTodo);
+        Todo CreateTodo(TodoDto createTodo);
+        Todo EditTodo(int id, TodoDto editTodo);
         bool DeleteTodo(int id);
+        bool TodoExists(int id);
         bool Save();
     }
 }
