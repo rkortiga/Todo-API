@@ -10,9 +10,9 @@ namespace Todo_API.Model
 
         [Required]
         [MaxLength(255)]
-        public string Task { get; set; }
+        public required string Task { get; set; }
 
-        public DateOnly CreateDate { get; set; }
+        public DateOnly CreateDate { get; init; }
 
         [DefaultValue(false)]
         public bool IsCompleted { get; set; }

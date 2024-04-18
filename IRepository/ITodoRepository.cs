@@ -5,12 +5,12 @@ namespace Todo_API.IRepository
 {
     public interface ITodoRepository
     {
-        ICollection<Todo> GetTodos();
-        Todo GetTodoById(int id);
-        Todo CreateTodo(TodoDto createTodo);
-        Todo EditTodo(int id, TodoDto editTodo);
-        bool DeleteTodo(int id);
-        bool TodoExists(int id);
-        bool Save();
+        Task<ICollection<Todo>> GetTodosAsync();
+        Task<Todo> GetTodoByIdAsync(int id);
+        Task<Todo> CreateTodoAsync(TodoDto createTodo);
+        Task<Todo> EditTodoAsync(int id, TodoDto editTodo);
+        Task<bool> DeleteTodoAsync(int id);
+        Task<bool> TodoExistsAsync(int id);
+        Task<bool> SaveAsync();
     }
 }

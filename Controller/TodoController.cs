@@ -3,50 +3,50 @@ using Todo_API.Dto;
 using Todo_API.IRepository;
 using Todo_API.Model;
 
-namespace Todo_API.Controllers
+namespace Todo_API.Controller
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TodoController : Controller
+    public class TodoController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ITodoRepository _todoRepository;
 
         public TodoController(ITodoRepository todoRepository)
         {
-            _todoRepository = todoRepository ?? throw new ArgumentNullException(nameof(todoRepository));
+            _todoRepository = todoRepository;
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Todo>))]
-        public IActionResult GetTodos()
+        public async Task<IActionResult> GetTodos()
         {
-            var todos = _todoRepository.GetTodos();
+            var todos = await _todoRepository.GetTodosAsync();
             return Ok(todos);
         }
 
         [HttpGet("{id:int}")]
         [ProducesResponseType(200, Type = typeof(Todo))]
-        public IActionResult GetTodoById(int id)
+        public async Task<IActionResult> GetTodoById(int id)
         {
-            if (!_todoRepository.TodoExists(id))
+            if (!await _todoRepository.TodoExistsAsync(id))
             {
                 return NotFound();
             }
 
-            var todo = _todoRepository.GetTodoById(id);
+            var todo = await _todoRepository.GetTodoByIdAsync(id);
             return Ok(todo);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
-        public ActionResult<Todo> CreateTodo([FromBody] TodoDto createTodo)
+        public async Task<ActionResult<Todo>> CreateTodo([FromBody] TodoDto createTodo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var createdTodo = _todoRepository.CreateTodo(createTodo);
+            var createdTodo = await _todoRepository.CreateTodoAsync(createTodo);
             if (createdTodo == null)
             {
                 return StatusCode(500, "A problem happened while handling your request.");
@@ -56,14 +56,14 @@ namespace Todo_API.Controllers
 
         [HttpPut("{id:int}")]
         [ProducesResponseType(200)]
-        public ActionResult<Todo> EditTodo(int id, [FromBody] TodoDto editTodo)
+        public async Task<ActionResult<Todo>> EditTodo(int id, [FromBody] TodoDto editTodo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var editedTodo = _todoRepository.EditTodo(id, editTodo);
+            var editedTodo = await _todoRepository.EditTodoAsync(id, editTodo);
             if (editedTodo == null)
             {
                 return StatusCode(404, "Task does not exist.");
@@ -73,9 +73,9 @@ namespace Todo_API.Controllers
 
         [HttpDelete("{id:int}")]
         [ProducesResponseType(204)]
-        public IActionResult DeleteTodo(int id)
+        public async Task<IActionResult> DeleteTodo(int id)
         {
-            var deleted = _todoRepository.DeleteTodo(id);
+            var deleted = await _todoRepository.DeleteTodoAsync(id);
             if (!deleted)
             {
                 return NotFound();

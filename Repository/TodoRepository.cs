@@ -1,4 +1,5 @@
-﻿using Todo_API.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Todo_API.Context;
 using Todo_API.Dto;
 using Todo_API.IRepository;
 using Todo_API.Model;
@@ -14,17 +15,17 @@ namespace Todo_API.Repository
             _context = context;
         }
 
-        public ICollection<Todo> GetTodos()
+        public async Task<ICollection<Todo>> GetTodosAsync()
         {
-            return _context.Todos.OrderBy(p => p.Id).ToList();
+            return await _context.Todos.OrderBy(p => p.Id).ToListAsync();
         }
 
-        public Todo GetTodoById(int id)
+        public async Task<Todo> GetTodoByIdAsync(int id)
         {
-            return _context.Todos.Where(p => p.Id == id).FirstOrDefault();
+            return await _context.Todos.FindAsync(id);
         }
 
-        public Todo CreateTodo(TodoDto createTodo)
+        public async Task<Todo> CreateTodoAsync(TodoDto createTodo)
         {
             var todo = new Todo
             {
@@ -33,46 +34,43 @@ namespace Todo_API.Repository
                 IsCompleted = createTodo.IsCompleted
             };
             _context.Todos.Add(todo);
-            if (Save())
-            {
-                return todo;
-            }
-            return null;
+            await SaveAsync();
+            return todo;
         }
 
-        public Todo EditTodo(int id, TodoDto editTodo)
+        public async Task<Todo> EditTodoAsync(int id, TodoDto editTodo)
         {
-            var todo = GetTodoById(id);
+            var todo = await GetTodoByIdAsync(id);
             if (todo == null)
             {
                 return null;
             }
             todo.Task = editTodo.Task;
             todo.IsCompleted = editTodo.IsCompleted;
-            Save();
+            await SaveAsync();
             return todo;
         }
 
-        public bool DeleteTodo(int id)
+        public async Task<bool> DeleteTodoAsync(int id)
         {
-            var todo = GetTodoById(id);
+            var todo = await GetTodoByIdAsync(id);
             if (todo == null)
             {
                 return false;
             }
             _context.Todos.Remove(todo);
-            return Save();
+            await SaveAsync();
+            return true;
         }
 
-        public bool Save()
+        public async Task<bool> SaveAsync()
         {
-            var saved = _context.SaveChanges();
-            return saved > 0 ? true : false;
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public bool TodoExists(int id)
+        public async Task<bool> TodoExistsAsync(int id)
         {
-            return _context.Todos.Any(p => p.Id == id);
+            return await _context.Todos.AnyAsync(p => p.Id == id);
         }
     }
 }
