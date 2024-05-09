@@ -7,7 +7,7 @@ namespace Todo_API.Controller
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TodoController : Microsoft.AspNetCore.Mvc.Controller
+    public class TodoController : ControllerBase
     {
         private readonly ITodoRepository _todoRepository;
 

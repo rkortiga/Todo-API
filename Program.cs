@@ -17,7 +17,7 @@ builder.Services.AddDbContext<TodoContext>(options => options.UseSqlServer(build
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowOrigin",
-        builder => builder.AllowAnyOrigin()
+        policyBuilder => policyBuilder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
