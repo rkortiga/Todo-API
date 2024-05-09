@@ -34,7 +34,7 @@ namespace Todo_API.Repository
                 IsCompleted = createTodo.IsCompleted
             };
             _context.Todos.Add(todo);
-            await SaveAsync();
+            await _context.SaveChangesAsync();
             return todo;
         }
 
@@ -47,7 +47,7 @@ namespace Todo_API.Repository
             }
             todo.Task = editTodo.Task;
             todo.IsCompleted = editTodo.IsCompleted;
-            await SaveAsync();
+            await _context.SaveChangesAsync();
             return todo;
         }
 
@@ -59,15 +59,11 @@ namespace Todo_API.Repository
                 return false;
             }
             _context.Todos.Remove(todo);
-            await SaveAsync();
+            await _context.SaveChangesAsync();
+
             return true;
         }
-
-        public async Task<bool> SaveAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
-
+        
         public async Task<bool> TodoExistsAsync(int id)
         {
             return await _context.Todos.AnyAsync(p => p.Id == id);

@@ -13,7 +13,7 @@ namespace Todo_API.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Model.Todo>(entity =>
+            modelBuilder.Entity<Todo>(entity =>
             {
                 
             });

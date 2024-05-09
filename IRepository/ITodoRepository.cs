@@ -11,6 +11,5 @@ namespace Todo_API.IRepository
         Task<Todo> EditTodoAsync(int id, TodoDto editTodo);
         Task<bool> DeleteTodoAsync(int id);
         Task<bool> TodoExistsAsync(int id);
-        Task<bool> SaveAsync();
     }
 }
